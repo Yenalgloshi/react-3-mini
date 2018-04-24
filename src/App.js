@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.getVehicles();
+    // this.getVehicles();
   }
 
   getVehicles() {
@@ -38,10 +38,11 @@ class App extends Component {
     // setState with response -> vehiclesToDisplay
     let promise = axios.get(`${this.state.baseUrl}/vehicles`)
     promise.then( res => {
+      toast.success("I got all the vehicles!")
       this.setState({
         vehiclesToDisplay: res.data
       })
-    })
+    }).catch(() => toast.error("Sorry... couldn't get the vehicles"))
   }
 
   getPotentialBuyers() {
@@ -101,10 +102,11 @@ class App extends Component {
     // axios (PUT)
     // setState with response -> vehiclesToDisplay
     axios.put(`${this.state.baseUrl}/vehicles/${id}/${priceChange}`).then( res => {
+      toast.success("The price has been updated.");
       this.setState({
         vehiclesToDisplay: res.data.vehicles
       })
-    })
+    }).catch(() => toast.error("Price update has failed."))
   }
 
   addCar() {
@@ -119,10 +121,11 @@ class App extends Component {
     // axios (POST)
     // setState with response -> vehiclesToDisplay
     axios.post(this.state.baseUrl + '/vehicles', newCar).then( res => {
+      toast.success("Your vehicle has been successfully added.");
       this.setState({
         vehiclesToDisplay: res.data.vehicles
       })
-    })
+    }).catch(() => toast.error("Your vehicle failed to be added."))
   }
 
   addBuyer() {
